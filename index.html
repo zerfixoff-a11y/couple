@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Notre histoire</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300;1,9..144,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #1c0a16;
+    --panel: #2e1226;
+    --ink: #fff0ee;
+    --muted: #d1a7b6;
+    --rose: #ff8fa8;
+    --blush: #ffd3da;
+    --line: #5b2e48;
+    --serif: "Fraunces", Georgia, "Times New Roman", serif;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; min-height: 100%; }
+  body {
+    background:
+      radial-gradient(70% 45% at 50% -5%, #6b1d44 0%, transparent 70%),
+      radial-gradient(55% 40% at 100% 100%, #3d1553 0%, transparent 70%),
+      radial-gradient(45% 35% at 0% 80%, #4a1230 0%, transparent 70%),
+      var(--bg);
+    background-attachment: fixed;
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.5;
+    overflow-x: hidden;
+  }
+  #fx { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+  main {
+    position: relative; z-index: 1;
+    max-width: 46rem; margin: 0 auto;
+    padding: 3rem 1.25rem 5rem;
+    text-align: center;
+    display: flex; flex-direction: column; align-items: center;
+  }
+
+  /* Portrait */
+  .avatar {
+    position: relative; width: 9.5rem; height: 9.5rem;
+    border: 0; padding: 0; background: none; cursor: pointer;
+    border-radius: 50%;
+  }
+  .avatar::before, .avatar::after {
+    content: ""; position: absolute; inset: -6px; border-radius: 50%;
+    border: 1.5px solid var(--rose); opacity: 0;
+    animation: ring 2.8s ease-out infinite;
+  }
+  .avatar::after { animation-delay: 1.4s; }
+  .avatar .disc {
+    position: absolute; inset: 0; border-radius: 50%; overflow: hidden;
+    background: linear-gradient(145deg, #8e2a56, #3d1553);
+    box-shadow: 0 0 0 3px var(--bg), 0 0 0 4px var(--rose), 0 18px 50px rgba(255, 90, 140, .35);
+    display: grid; place-items: center;
+    animation: beat 2.8s ease-in-out infinite;
+  }
+  .avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .avatar svg { width: 46%; height: 46%; fill: var(--blush); }
+  @keyframes beat { 0%, 100% { transform: scale(1); } 12% { transform: scale(1.045); } 24% { transform: scale(1); } 36% { transform: scale(1.03); } 48% { transform: scale(1); } }
+  @keyframes ring { 0% { transform: scale(.95); opacity: .7; } 100% { transform: scale(1.45); opacity: 0; } }
+
+  /* Titre */
+  h1 {
+    font-family: var(--serif); font-style: italic; font-weight: 300;
+    font-size: clamp(3rem, 13vw, 6.6rem); line-height: 1;
+    margin: 2rem 0 .5rem; letter-spacing: -.02em;
+    background: linear-gradient(100deg, var(--blush) 10%, var(--rose) 55%, #ffb3c4 95%);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent; color: transparent;
+    padding: 0 .1em .12em;
+  }
+  .dedication {
+    font-family: var(--serif); font-style: italic; font-weight: 300;
+    font-size: clamp(1.15rem, 3.6vw, 1.5rem); color: var(--blush);
+    margin: 0 0 .5rem; max-width: 30rem;
+  }
+  .sub { color: var(--muted); margin: 0 0 3rem; font-size: .98rem; }
+
+  /* Compteur */
+  .big {
+    display: flex; flex-wrap: wrap; justify-content: center; align-items: baseline;
+    gap: .3rem 1.6rem; margin-bottom: .25rem;
+  }
+  .grp { display: inline-flex; align-items: baseline; gap: .45rem; }
+  .grp b {
+    font-family: var(--serif); font-weight: 600; font-size: clamp(3.4rem, 14vw, 6rem);
+    line-height: 1; color: var(--ink); font-variant-numeric: tabular-nums;
+  }
+  .grp i {
+    font-family: var(--serif); font-style: italic; font-weight: 300;
+    font-size: clamp(1.3rem, 4.5vw, 1.9rem); color: var(--rose);
+  }
+  .clock {
+    font-family: var(--serif); font-weight: 300; font-variant-numeric: tabular-nums;
+    font-size: clamp(2rem, 8vw, 3.2rem); color: var(--rose);
+    letter-spacing: .04em; margin: .25rem 0 1.25rem;
+  }
+  .clock small { font-style: italic; font-size: .45em; color: var(--muted); letter-spacing: 0; margin-left: .5rem; }
+  .total { color: var(--muted); margin: 0 0 3rem; }
+  .total strong { color: var(--ink); font-weight: 600; }
+
+  /* Prochain cap */
+  .next { width: 100%; max-width: 30rem; margin-bottom: 1.75rem; }
+  .next p { margin: 0 0 .7rem; color: var(--muted); }
+  .next p strong { color: var(--blush); font-weight: 600; }
+  .bar { height: 8px; border-radius: 99px; background: var(--line); overflow: hidden; }
+  .bar > div {
+    height: 100%; width: 0; border-radius: 99px;
+    background: linear-gradient(90deg, #ff6f91, var(--blush));
+    box-shadow: 0 0 14px rgba(255, 143, 168, .7);
+    transition: width 1s ease;
+  }
+  .bar-legend { display: flex; justify-content: space-between; font-size: .85rem; color: var(--muted); margin-top: .4rem; }
+  .anniv { color: var(--muted); margin: 0 0 3rem; max-width: 30rem; }
+  .anniv strong { color: var(--blush); font-weight: 600; }
+
+  .edit {
+    font: inherit; color: var(--muted); background: none; border: 1px solid var(--line);
+    border-radius: 99px; padding: .55rem 1.2rem; cursor: pointer;
+  }
+  .edit:hover { color: var(--ink); border-color: var(--rose); }
+
+  /* Apparition (une seule séquence au chargement) */
+  main > * { animation: rise .9s cubic-bezier(.2, .7, .2, 1) both; }
+  main > *:nth-child(2) { animation-delay: .1s; }
+  main > *:nth-child(3) { animation-delay: .2s; }
+  main > *:nth-child(4) { animation-delay: .3s; }
+  main > *:nth-child(5) { animation-delay: .4s; }
+  main > *:nth-child(n+6) { animation-delay: .5s; }
+  @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+  /* Fenêtre d'édition */
+  dialog {
+    background: var(--panel); color: var(--ink); border: 1px solid var(--line);
+    border-radius: 14px; padding: 1.5rem; width: min(26rem, calc(100% - 2rem));
+  }
+  dialog::backdrop { background: rgba(14, 4, 10, .72); backdrop-filter: blur(4px); }
+  dialog h2 { font-family: var(--serif); font-weight: 600; font-size: 1.5rem; margin: 0 0 1rem; }
+  .fields { display: grid; gap: 1rem; }
+  label { display: grid; gap: .35rem; font-size: .93rem; color: var(--muted); }
+  input[type=text], input[type=date], input[type=datetime-local] {
+    font: inherit; color: var(--ink); background: var(--bg); border: 1px solid var(--line);
+    border-radius: 8px; padding: .65rem .75rem; color-scheme: dark; width: 100%;
+  }
+  input[type=file] { font: inherit; color: var(--muted); font-size: .9rem; }
+  .actions { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.25rem; align-items: center; }
+  .btn {
+    font: inherit; font-weight: 600; border: 0; border-radius: 8px; padding: .7rem 1.2rem; cursor: pointer;
+    background: var(--rose); color: #2a0e1d;
+  }
+  .btn.ghost { background: none; color: var(--muted); border: 1px solid var(--line); font-weight: 400; }
+  .btn.link { background: none; color: var(--muted); font-weight: 400; text-decoration: underline; padding: .7rem .4rem; margin-left: auto; }
+  .msg { color: var(--rose); min-height: 1.3em; margin: .75rem 0 0; font-size: .9rem; }
+  :focus-visible { outline: 2px solid var(--rose); outline-offset: 3px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+<canvas id="fx" aria-hidden="true"></canvas>
+
+<main>
+  <button class="avatar" id="avatar" type="button" aria-label="Changer la photo et les infos">
+    <span class="disc" id="disc"></span>
+  </button>
+  <h1 id="title"></h1>
+  <p class="dedication" id="dedication"></p>
+  <p class="sub" id="sub"></p>
+
+  <div class="big" id="big"></div>
+  <div class="clock" id="clock">00:00:00</div>
+  <p class="total" id="total"></p>
+
+  <div class="next">
+    <p id="nextText"></p>
+    <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="barWrap"><div id="barFill"></div></div>
+    <div class="bar-legend"><span id="prevLbl"></span><span id="nextLbl"></span></div>
+  </div>
+  <p class="anniv" id="anniv"></p>
+
+  <button class="edit" id="edit" type="button">Modifier les infos</button>
+</main>
+
+<dialog id="dlg">
+  <h2>Nos infos</h2>
+  <div class="fields">
+    <label>Son prénom
+      <input id="in-name" type="text" autocomplete="off">
+    </label>
+    <label>Sa date de naissance
+      <input id="in-birth" type="date">
+    </label>
+    <label>Date et heure de votre début
+      <input id="in-start" type="datetime-local">
+    </label>
+    <label>Un petit mot pour elle
+      <input id="in-note" type="text" maxlength="90" autocomplete="off">
+    </label>
+    <label>Sa photo
+      <input id="in-photo" type="file" accept="image/*">
+    </label>
+  </div>
+  <div class="actions">
+    <button class="btn" id="save" type="button">Enregistrer</button>
+    <button class="btn ghost" id="close" type="button">Fermer</button>
+    <button class="btn link" id="reset" type="button">Tout réinitialiser</button>
+  </div>
+  <p class="msg" id="msg" role="status"></p>
+</dialog>
+
+<script>
+  // Valeurs par défaut : change-les ici, ou directement sur la page via « Modifier les infos ».
+  var DEFAULTS = {
+    name: "Ma chérie",
+    birth: "2000-01-01",
+    start: "2024-01-01T12:00",
+    note: "Chaque seconde avec toi compte."
+  };
+  var KEY = "couple-counter-v2", PHOTO_KEY = "couple-counter-photo-v2";
+
+  function load() {
+    try {
+      var p = JSON.parse(localStorage.getItem(KEY));
+      if (p && p.name && p.birth && p.start) return p;
+    } catch (e) {}
+    return { name: DEFAULTS.name, birth: DEFAULTS.birth, start: DEFAULTS.start, note: DEFAULTS.note };
+  }
+  function store(k, v) { try { localStorage.setItem(k, v); return true; } catch (e) { return false; } }
+  function loadPhoto() { try { return localStorage.getItem(PHOTO_KEY); } catch (e) { return null; } }
+
+  var data = load(), photo = loadPhoto(), pendingPhoto = null, resetPhoto = false;
+
+  var $ = function (id) { return document.getElementById(id); };
+  function plural(n, one, many) { return n > 1 ? many : one; }
+  function parse(s) { var t = new Date(s); return isNaN(t) ? null : t; }
+  var fmtLong = new Intl.DateTimeFormat("fr-FR", { dateStyle: "long" });
+  var fmtLongTime = new Intl.DateTimeFormat("fr-FR", { dateStyle: "long", timeStyle: "short" });
+  var pad = function (n) { return String(n).padStart(2, "0"); };
+
+  function diff(a, b) {
+    var y = b.getFullYear() - a.getFullYear(), mo = b.getMonth() - a.getMonth(), d = b.getDate() - a.getDate();
+    var h = b.getHours() - a.getHours(), mi = b.getMinutes() - a.getMinutes(), s = b.getSeconds() - a.getSeconds();
+    if (s < 0) { s += 60; mi--; }
+    if (mi < 0) { mi += 60; h--; }
+    if (h < 0) { h += 24; d--; }
+    if (d < 0) { d += new Date(b.getFullYear(), b.getMonth(), 0).getDate(); mo--; }
+    if (mo < 0) { mo += 12; y--; }
+    return { y: y, mo: mo, d: d, h: h, mi: mi, s: s };
+  }
+  function ageOf(birth, now) {
+    var a = now.getFullYear() - birth.getFullYear(), m = now.getMonth() - birth.getMonth();
+    if (m < 0 || (m === 0 && now.getDate() < birth.getDate())) a--;
+    return a;
+  }
+
+  var HEART_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.3C.9 8.3 2.7 4.5 6.4 4.5c2.1 0 3.8 1.1 5.6 3.3 1.8-2.2 3.5-3.3 5.6-3.3 3.7 0 5.5 3.8 4 7.2C19.5 16.4 12 21 12 21z"/></svg>';
+
+  function renderStatic() {
+    var birth = parse(data.birth), start = parse(data.start), now = new Date();
+    $("title").textContent = "Moi & " + data.name;
+    document.title = "Moi & " + data.name;
+    $("dedication").textContent = data.note || "";
+    $("dedication").style.display = data.note ? "" : "none";
+    var age = birth ? ageOf(birth, now) : null;
+    $("sub").textContent =
+      (age !== null ? data.name + " a " + age + " " + plural(age, "an", "ans") + ". " : "") +
+      (start ? "Ensemble depuis le " + fmtLongTime.format(start) + "." : "");
+    var disc = $("disc");
+    disc.innerHTML = "";
+    if (photo) {
+      var img = new Image();
+      img.alt = "Photo de " + data.name;
+      img.src = photo;
+      disc.appendChild(img);
+    } else {
+      disc.innerHTML = HEART_SVG;
+    }
+  }
+
+  var MILESTONES = [100, 200, 300, 365, 400, 500, 600, 700, 730, 800, 900, 1000, 1095, 1250, 1460, 1500, 1825, 2000, 2500, 3000, 3650];
+  function milestones(days) {
+    var prev = 0, next = null, i;
+    for (i = 0; i < MILESTONES.length; i++) {
+      if (MILESTONES[i] > days) { next = MILESTONES[i]; break; }
+      prev = MILESTONES[i];
+    }
+    if (next === null) { prev = Math.floor(days / 1000) * 1000; next = prev + 1000; }
+    return { prev: prev, next: next };
+  }
+  function label(n) {
+    if (n === 365) return "1 an";
+    if (n === 730) return "2 ans";
+    if (n === 1095) return "3 ans";
+    if (n === 1460) return "4 ans";
+    if (n === 1825) return "5 ans";
+    if (n === 3650) return "10 ans";
+    return n.toLocaleString("fr-FR") + " jours";
+  }
+
+  var lastDay = -1;
+  function tick() {
+    var start = parse(data.start);
+    if (!start) return;
+    var now = new Date();
+    if (start > now) start = now;
+    var r = diff(start, now);
+
+    var html = "";
+    if (r.y > 0) html += '<span class="grp"><b>' + r.y + '</b><i>' + plural(r.y, "an", "ans") + '</i></span>';
+    if (r.y > 0 || r.mo > 0) html += '<span class="grp"><b>' + r.mo + '</b><i>mois</i></span>';
+    html += '<span class="grp"><b>' + r.d + '</b><i>' + plural(r.d, "jour", "jours") + '</i></span>';
+    $("big").innerHTML = html;
+    $("clock").innerHTML = pad(r.h) + ":" + pad(r.mi) + ":" + pad(r.s) + "<small>h : min : s</small>";
+
+    var days = Math.floor((now - start) / 86400000);
+    if (days !== lastDay) {
+      lastDay = days;
+      $("total").innerHTML = "Soit <strong>" + days.toLocaleString("fr-FR") + "</strong> " + plural(days, "jour", "jours") + " à être ensemble.";
+      var m = milestones(days), left = m.next - days;
+      var pct = Math.max(0, Math.min(100, ((days - m.prev) / (m.next - m.prev)) * 100));
+      $("nextText").innerHTML = "Prochain cap : <strong>" + label(m.next) + "</strong>, dans " + left + " " + plural(left, "jour", "jours") + ".";
+      $("prevLbl").textContent = m.prev ? label(m.prev) : "Le début";
+      $("nextLbl").textContent = label(m.next);
+      $("barWrap").setAttribute("aria-valuenow", Math.round(pct));
+      setTimeout(function () { $("barFill").style.width = pct + "%"; }, 50);
+
+      var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      var cand = new Date(now.getFullYear(), start.getMonth(), start.getDate());
+      if (cand < today) cand = new Date(now.getFullYear() + 1, start.getMonth(), start.getDate());
+      var yrs = cand.getFullYear() - start.getFullYear();
+      if (yrs < 1) { cand = new Date(start.getFullYear() + 1, start.getMonth(), start.getDate()); yrs = 1; }
+      var dl = Math.round((cand - today) / 86400000);
+      $("anniv").innerHTML = dl === 0
+        ? "<strong>Joyeux anniversaire de couple !</strong> " + yrs + " " + plural(yrs, "an", "ans") + " aujourd’hui."
+        : "Prochain anniversaire de couple (" + yrs + " " + plural(yrs, "an", "ans") + ") le <strong>" + fmtLong.format(cand) + "</strong>, dans " + dl + " " + plural(dl, "jour", "jours") + ".";
+    }
+  }
+
+  // ---- Fenêtre d'édition ----
+  var dlg = $("dlg");
+  function fillForm() {
+    $("in-name").value = data.name;
+    $("in-birth").value = data.birth;
+    $("in-start").value = data.start;
+    $("in-note").value = data.note || "";
+    $("in-photo").value = "";
+    $("msg").textContent = "";
+    pendingPhoto = null; resetPhoto = false;
+  }
+  function openDlg() { fillForm(); if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", ""); }
+  $("edit").addEventListener("click", openDlg);
+  $("avatar").addEventListener("click", openDlg);
+  $("close").addEventListener("click", function () { dlg.close(); });
+
+  $("in-photo").addEventListener("change", function (e) {
+    var f = e.target.files && e.target.files[0];
+    if (!f) return;
+    var reader = new FileReader();
+    reader.onload = function () {
+      var img = new Image();
+      img.onload = function () {
+        var size = 480, c = document.createElement("canvas");
+        c.width = c.height = size;
+        var side = Math.min(img.width, img.height);
+        c.getContext("2d").drawImage(img, (img.width - side) / 2, (img.height - side) / 2, side, side, 0, 0, size, size);
+        pendingPhoto = c.toDataURL("image/jpeg", 0.85);
+        $("msg").textContent = "Photo prête, clique sur Enregistrer.";
+      };
+      img.src = reader.result;
+    };
+    reader.readAsDataURL(f);
+  });
+
+  $("save").addEventListener("click", function () {
+    var name = $("in-name").value.trim(), birth = $("in-birth").value, start = $("in-start").value;
+    if (!name || !birth || !start) { $("msg").textContent = "Remplis le prénom et les deux dates."; return; }
+    data = { name: name, birth: birth, start: start, note: $("in-note").value.trim() };
+    var ok = store(KEY, JSON.stringify(data));
+    if (pendingPhoto) { photo = pendingPhoto; ok = store(PHOTO_KEY, photo) && ok; }
+    lastDay = -1;
+    renderStatic(); tick();
+    if (ok) dlg.close(); else $("msg").textContent = "Mis à jour, mais non sauvegardé dans ce navigateur.";
+  });
+
+  $("reset").addEventListener("click", function () {
+    try { localStorage.removeItem(KEY); localStorage.removeItem(PHOTO_KEY); } catch (e) {}
+    data = { name: DEFAULTS.name, birth: DEFAULTS.birth, start: DEFAULTS.start, note: DEFAULTS.note };
+    photo = null; lastDay = -1;
+    renderStatic(); tick(); fillForm();
+    $("msg").textContent = "Infos remises par défaut.";
+  });
+
+  // ---- Cœurs qui flottent ----
+  (function () {
+    var cv = $("fx"), ctx = cv.getContext("2d"), W, H, hearts = [];
+    var still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    function size() {
+      var dpr = window.devicePixelRatio || 1;
+      W = cv.width = innerWidth * dpr; H = cv.height = innerHeight * dpr;
+    }
+    function spawn(initial) {
+      var s = (8 + Math.random() * 22) * (window.devicePixelRatio || 1);
+      return { x: Math.random() * W, y: initial ? Math.random() * H : H + s, s: s,
+        v: (.25 + Math.random() * .6) * (window.devicePixelRatio || 1), p: Math.random() * 6.28,
+        a: .08 + Math.random() * .22, hue: Math.random() < .7 ? "255,143,168" : "255,211,218" };
+    }
+    function heart(x, y, s) {
+      ctx.beginPath();
+      ctx.moveTo(x, y + s * .35);
+      ctx.bezierCurveTo(x - s, y - s * .35, x - s * .45, y - s * 1.05, x, y - s * .45);
+      ctx.bezierCurveTo(x + s * .45, y - s * 1.05, x + s, y - s * .35, x, y + s * .35);
+      ctx.fill();
+    }
+    function frame() {
+      ctx.clearRect(0, 0, W, H);
+      hearts.forEach(function (h, i) {
+        h.y -= h.v; h.p += .012;
+        var x = h.x + Math.sin(h.p) * 18;
+        ctx.fillStyle = "rgba(" + h.hue + "," + h.a + ")";
+        heart(x, h.y, h.s);
+        if (h.y < -h.s * 2) hearts[i] = spawn(false);
+      });
+      if (!still) requestAnimationFrame(frame);
+    }
+    size();
+    for (var i = 0; i < 26; i++) hearts.push(spawn(true));
+    addEventListener("resize", size);
+    frame();
+  })();
+
+  renderStatic();
+  tick();
+  setInterval(tick, 1000);
+</script>
+</body>
+</html>
